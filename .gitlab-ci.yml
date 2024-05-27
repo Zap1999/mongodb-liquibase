@@ -1,0 +1,49 @@
+---
+include:
+  project: 'it/gitlab-templates'
+  ref: 0.0.5
+  file: '/deploy_release_templates.yml'
+
+variables:
+  MAVEN_OPTS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true -Dmaven.repo.local=/cache/maven.repository"
+  MAVEN_CLI_OPTS: "-s /settings.xml --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+  GIT_STRATEGY: clone
+
+before_script:
+  - echo ${MAVEN_SETTINGS_XML} > /settings.xml
+
+stages:
+  - build
+  - deploy
+  - release
+
+default:
+  image: maven:3.6.3-jdk-11-openj9
+  tags:
+    - k8s-xlarge
+
+build:
+  stage: build
+  services:
+    - ${DOCKER_DIND_VERSION}
+  except:
+    - tags
+  script:
+    - mvn $MAVEN_CLI_OPTS install
+
+deploy-feature:
+  extends: .deploy_feature_template
+  stage: deploy
+  when: manual
+
+deploy-develop:
+  extends: .deploy_develop_template
+  stage: deploy
+
+make-release:
+  extends: .make_release_manual_template
+  stage: release
+
+deploy-master:
+  extends: .deploy_master_template
+  stage: deploy

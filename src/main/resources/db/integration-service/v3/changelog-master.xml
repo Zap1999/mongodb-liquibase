@@ -1,0 +1,11 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <include file="tasks/PP-11111/changelog.xml" relativeToChangelogFile="true"/>
+    <include file="tasks/PP-22222/changelog.xml" context="default" relativeToChangelogFile="true"/>
+    <include file="tasks/PP-33333/changelog.xml" context="rgs-wallet-adapter" relativeToChangelogFile="true"/>
+    <include file="tasks/PP-44444/changelog.xml" context="bingo" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

@@ -1,0 +1,68 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="create-collection-users-default" author="Andrii Vashchenok">
+        <comment>Creating a test 'users-default' collection.</comment>
+        <ext:runCommand>
+            <ext:command>
+                {
+                create: "users-default",
+                validator: {
+                $jsonSchema: {
+                bsonType: "object",
+                required: [ "firstname", "lastname", "age" ],
+                properties: {
+                firstname: {
+                bsonType: "string",
+                description: "must be a string and is required"
+                },
+                lastname: {
+                bsonType: "string",
+                description: "must be a string and is required"
+                },
+                age: {
+                bsonType: "int",
+                minimum: 0,
+                description: "must be an integer and is required"
+                }
+                }
+                }
+                }
+                }
+            </ext:command>
+        </ext:runCommand>
+    </changeSet>
+
+    <changeSet id="insert-initial-data-to-collection-users-def" author="Andrii Vashchenok">
+        <comment>Inserting sample users to 'users-default' collection.</comment>
+        <ext:runCommand>
+            <ext:command>
+                {
+                "insert": "users-default",
+                "documents": [
+                {
+                "firstname": "John",
+                "lastname": "Doe",
+                "age": 30
+                },
+                {
+                "firstname": "Jane",
+                "lastname": "Doe",
+                "age": 28
+                },
+                {
+                "firstname": "Bob",
+                "lastname": "Smith",
+                "age": 35
+                }
+                ]
+                }
+            </ext:command>
+        </ext:runCommand>
+    </changeSet>
+
+</databaseChangeLog>
