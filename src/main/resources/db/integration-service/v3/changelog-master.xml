@@ -8,5 +8,6 @@
     <include file="tasks/PP-33333/changelog.xml" context="rgs-wallet-adapter" relativeToChangelogFile="true"/>
     <include file="tasks/PP-44444/changelog.xml" context="bingo" relativeToChangelogFile="true"/>
     <include file="tasks/PP-55555/changelog.xml" relativeToChangelogFile="true"/>
+    <include file="tasks/PP-66666/changelog.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
